@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALTER — Change Your Reality</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --bg: #050509;
+      --text: #f5f3ff;
+      --muted: #9290aa;
+      --accent: #a78bfa;
+      --glow: #7448ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, sans-serif;
+      transition: background 1s ease;
+    }
+
+    #universe {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 28px 6%;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 7px;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .status {
+      color: #aaa6c5;
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 30px;
+      max-width: 1100px;
+      width: 100%;
+      margin: 35px auto;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(56px, 8vw, 100px);
+      line-height: .95;
+      letter-spacing: -7px;
+      margin: 24px 0;
+    }
+
+    h1 span {
+      background: linear-gradient(100deg, #fff, var(--accent), #61d9ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .description {
+      max-width: 410px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+      border-radius: 14px;
+      padding: 13px 18px;
+      transition: transform .2s, box-shadow .3s, background .3s;
+    }
+
+    button:hover { transform: translateY(-2px); }
+
+    .primary {
+      border: 0;
+      color: #fff;
+      font-weight: 700;
+      background: linear-gradient(110deg, #7857ff, #a855f7, #478bff);
+      box-shadow: 0 0 35px #8055ff30;
+    }
+
+    .primary:hover { box-shadow: 0 0 45px #8055ff70; }
+
+    .secondary {
+      color: #ded9f7;
+      border: 1px solid #ffffff20;
+      background: #ffffff08;
+    }
+
+    .scene {
+      min-height: 420px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .orb {
+      position: relative;
+      width: min(300px, 65vw);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 32% 28%, #ffffff 0%, #c6b6ff 3%, transparent 14%),
+        radial-gradient(circle at 36% 35%, #a78bfa 0%, #7448ff 20%, #35146e 48%, #080817 72%);
+      box-shadow:
+        inset -25px -20px 55px #000,
+        inset 12px 10px 35px #ffffff35,
+        0 0 45px var(--glow),
+        0 0 110px var(--glow);
+      animation: float 5s ease-in-out infinite, breathe 4s ease-in-out infinite;
+      transition: filter 1s, box-shadow 1s, border-radius 1s;
+    }
+
+    .orb::before, .orb::after {
+      content: "";
+      position: absolute;
+      inset: -18px;
+      border: 1px solid #b5a2ff55;
+      border-radius: 50%;
+      transform: rotateX(68deg) rotateZ(-25deg);
+      animation: orbit 12s linear infinite;
+    }
+
+    .orb::after {
+      inset: -38px;
+      border-color: #66d9ff40;
+      transform: rotateX(72deg) rotateZ(50deg);
+      animation-duration: 18s;
+      animation-direction: reverse;
+    }
+
+    .scene-label {
+      position: absolute;
+      bottom: 12px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 3px;
+    }
+
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      border-top: 1px solid #ffffff12;
+      padding-top: 20px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: #79f5bf;
+      box-shadow: 0 0 12px #79f5bf;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    @keyframes breathe {
+      0%, 100% { scale: 1; }
+      50% { scale: 1.035; }
+    }
+
+    @keyframes orbit {
+      from { rotate: 0deg; }
+      to { rotate: 360deg; }
+    }
+
+    body.transforming .orb {
+      border-radius: 38% 62% 55% 45% / 43% 38% 62% 57%;
+      filter: hue-rotate(95deg) saturate(1.6);
+      box-shadow: 0 0 55px #ff4fbb, 0 0 130px #5738ff;
+    }
+
+    body.transforming {
+      --accent: #ff8bd8;
+      --glow: #fa42c8;
+    }
+
+    @media (max-width: 700px) {
+      .app { padding: 22px 6%; }
+      .status { font-size: 9px; letter-spacing: 1px; }
+      main {
+        grid-template-columns: 1fr;
+        gap: 5px;
+        margin: 55px auto 30px;
+      }
+      h1 { font-size: 68px; letter-spacing: -5px; }
+      .scene { min-height: 340px; grid-row: 1; }
+      .orb { width: 205px; }
+      .scene-label { bottom: 5px; }
+      .bottom { flex-wrap: wrap; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="universe"></canvas>
+
+  <div class="app">
+    <header>
+      <div class="logo">ALT<span>E</span>R.</div>
+      <div class="status">CREATIVE SYSTEMS / 001</div>
+    </header>
+
+    <main>
+      <section>
+        <div class="eyebrow">A tua realidade pode mudar</div>
+        <h1>Break<br>the <span>form.</span></h1>
+        <p class="description">
+          Tudo começa com uma única forma. Interage com ela,
+          transforma a sua energia e descobre o que acontece
+          quando deixas de seguir as regras.
+        </p>
+        <div class="controls">
+          <button class="primary" id="transform">✦ Transformar realidade</button>
+          <button class="secondary" id="reset">Recomeçar ↺</button>
+        </div>
+      </section>
+
+      <section class="scene" aria-label="Esfera de energia animada">
+        <div class="orb" id="orb"></div>
+        <div class="scene-label" id="sceneLabel">OBJECT 001 — DORMANT</div>
+      </section>
+    </main>
+
+    <footer class="bottom">
+      <span><i class="dot"></i>SYSTEM ONLINE</span>
+      <span>NO RULES. JUST CREATION.</span>
+      <span id="counter">TRANSFORMATIONS: 0</span>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("universe");
+    const ctx = canvas.getContext("2d");
+    const orb = document.getElementById("orb");
+    const transformBtn = document.getElementById("transform");
+    const resetBtn = document.getElementById("reset");
+    const sceneLabel = document.getElementById("sceneLabel");
+    const counterLabel = document.getElementById("counter");
+
+    let particles = [];
+    let transformations = 0;
+    let transformed = false;
+    let width = 0;
+    let height = 0;
+
+    function resize() {
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      particles = Array.from({ length: Math.min(110, Math.floor(width / 10)) }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 1.8 + .3,
+        speed: Math.random() * .35 + .08,
+        alpha: Math.random() * .6 + .2
+      }));
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (const p of particles) {
+        p.y -= p.speed;
+        if (p.y < -5) {
+          p.y = height + 5;
+          p.x = Math.random() * width;
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = transformed
+          ? `rgba(255,115,220,${p.alpha})`
+          : `rgba(155,140,255,${p.alpha})`;
+        ctx.fill();
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    transformBtn.addEventListener("click", () => {
+      transformed = !transformed;
+      transformations++;
+
+      document.body.classList.toggle("transforming", transformed);
+      sceneLabel.textContent = transformed
+        ? "OBJECT 001 — ALTERED"
+        : "OBJECT 001 — STABILIZED";
+
+      counterLabel.textContent = `TRANSFORMATIONS: ${transformations}`;
+      transformBtn.textContent = transformed
+        ? "✦ Transformar novamente"
+        : "✦ Transformar realidade";
+    });
+
+    resetBtn.addEventListener("click", () => {
+      transformed = false;
+      transformations = 0;
+      document.body.classList.remove("transforming");
+      sceneLabel.textContent = "OBJECT 001 — DORMANT";
+      counterLabel.textContent = "TRANSFORMATIONS: 0";
+      transformBtn.textContent = "✦ Transformar realidade";
+    });
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+</html>
