@@ -239,6 +239,45 @@
       --glow: #fa42c8;
     }
 
+    
+/* ALTER — OVERDRIVE MODE */
+body.overdrive {
+  --accent: #63f3ff;
+  --glow: #00bfff;
+  background: #020b15;
+}
+
+body.overdrive .orb {
+  border-radius: 46% 54% 48% 52% / 52% 43% 57% 48%;
+  filter: hue-rotate(155deg) saturate(1.9);
+  box-shadow:
+    inset -25px -20px 55px #000,
+    inset 12px 10px 35px #b8fbff50,
+    0 0 35px #00bfff,
+    0 0 85px #0077ff,
+    0 0 150px #004dff70;
+}
+
+body.overdrive .orb::before {
+  border-color: #63f3ffb0;
+  border-width: 2px;
+}
+
+body.overdrive .orb::after {
+  border-color: #258bff90;
+  border-width: 2px;
+}
+
+body.overdrive .orb {
+  animation: float 2.2s ease-in-out infinite,
+             breathe 1.2s ease-in-out infinite;
+}
+
+body.overdrive .primary {
+  background: linear-gradient(110deg, #0077ff, #00d9ff);
+  box-shadow: 0 0 30px #00bfff50;
+}
+
     @media (max-width: 700px) {
       .app { padding: 22px 6%; }
       .status { font-size: 9px; letter-spacing: 1px; }
