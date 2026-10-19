@@ -436,9 +436,10 @@ body.overdrive .primary {
       transformations++;
 
       document.body.classList.toggle("transforming", transformed);
-      sceneLabel.textContent = transformed
-        ? "OBJECT 001 — ALTERED"
-        : "OBJECT 001 — STABILIZED";
+      document.body.classList.toggle("overdrive", transformed);
+     sceneLabel.textContent = transformed
+  ? "OBJECT 001 — OVERDRIVE"
+  : "OBJECT 001 — STABILIZED";
 
       counterLabel.textContent = `TRANSFORMATIONS: ${transformations}`;
       transformBtn.textContent = transformed
@@ -450,6 +451,7 @@ body.overdrive .primary {
       transformed = false;
       transformations = 0;
       document.body.classList.remove("transforming");
+      document.body.classList.remove("overdrive");
       sceneLabel.textContent = "OBJECT 001 — DORMANT";
       counterLabel.textContent = "TRANSFORMATIONS: 0";
       transformBtn.textContent = "✦ Transformar realidade";
