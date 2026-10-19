@@ -393,6 +393,7 @@
 
     transformBtn.addEventListener("click", () => {
       transformed = !transformed;
+      burstParticles();
       transformations++;
 
       document.body.classList.toggle("transforming", transformed);
